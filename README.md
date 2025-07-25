@@ -19,8 +19,8 @@ The app is a Flutter-based mobile application designed for managing financial tr
 ### Installation Steps
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-repo/kacha.git
-   cd kacha
+   git clone https://github.com/your-repo/kacha_test.git
+   cd kacha_test
    ```
 
 2. **Install Dependencies**
