@@ -56,7 +56,91 @@ class DioNetworkService extends NetworkService with ExceptionHandlerMixin {
   Future<Either<AppException, response.Response>> get(
     String endPoint, {
     Map<String, dynamic>? queryParams,
-  }) {
+  }) async {
+    // Return default data for specific endpoints
+    if (endPoint == '/auth/login') {
+      final defaultData = {
+        "user": {
+          "id": 1,
+          "email": "user@example.com",
+          "name": "John Doe",
+          "phone": "+1234567890",
+          "token": "user_token_123",
+        },
+        "token": "auth_token_456",
+      };
+      return Right(
+        response.Response(
+          statusCode: 200,
+          statusMessage: "OK",
+          data: defaultData,
+        ),
+      );
+    } else if (endPoint == '/wallet/balance' ||
+        endPoint == '/wallet/transactions') {
+      final defaultData = {
+        "wallet": {
+          "id": 1,
+          "balance": 1250.75,
+          "currency": "USD",
+          "lastUpdated": "2023-11-15T14:30:45Z",
+        },
+        "transactions": [
+          {
+            "id": 101,
+            "transactionId": "TX-2023-101",
+            "amount": 150.0,
+            "currency": "USD",
+            "recipientName": "John Doe",
+            "recipientAccount": "ACC-789012",
+            "date": "2023-11-10T09:15:22Z",
+            "status": "completed",
+            "note": "Invoice #1234",
+          },
+          {
+            "id": 102,
+            "transactionId": "TX-2023-102",
+            "amount": -75.25,
+            "currency": "USD",
+            "recipientName": "Amazon Inc",
+            "recipientAccount": "ACC-345678",
+            "date": "2023-11-12T16:45:10Z",
+            "status": "completed",
+            "note": "Online purchase",
+          },
+        ],
+      };
+      return Right(
+        response.Response(
+          statusCode: 200,
+          statusMessage: "OK",
+          data: defaultData,
+        ),
+      );
+    } else if (endPoint == '/transfers/send') {
+      final defaultData = {
+        "transaction": {
+          "id": 789,
+          "transactionId": "XFER-2023-789",
+          "amount": 250.0,
+          "currency": "USD",
+          "recipientName": "Sarah Johnson",
+          "recipientAccount": "ACC-456789",
+          "date": "2023-11-20T13:45:30Z",
+          "status": "completed",
+          "note": "Freelance payment",
+        },
+      };
+      return Right(
+        response.Response(
+          statusCode: 200,
+          statusMessage: "OK",
+          data: defaultData,
+        ),
+      );
+    }
+
+    // Original network call for other endpoints
     queryParams ??= {};
     queryParams[Params.apiKey] = apiKey;
     final res = handleException(
@@ -70,8 +154,91 @@ class DioNetworkService extends NetworkService with ExceptionHandlerMixin {
   Future<Either<AppException, response.Response>> post(
     String endPoint, {
     Map<String, dynamic>? data,
-  }) {
-    // queryParams[Params.apiKey] = apiKey;
+  }) async {
+    // Return default data for specific endpoints
+    if (endPoint == '/auth/login') {
+      final defaultData = {
+        "user": {
+          "id": 1,
+          "email": "user@example.com",
+          "name": "John Doe",
+          "phone": "+1234567890",
+          "token": "user_token_123",
+        },
+        "token": "auth_token_456",
+      };
+      return Right(
+        response.Response(
+          statusCode: 200,
+          statusMessage: "OK",
+          data: defaultData,
+        ),
+      );
+    } else if (endPoint == '/wallet/balance' ||
+        endPoint == '/wallet/transactions') {
+      final defaultData = {
+        "wallet": {
+          "id": 1,
+          "balance": 1250.75,
+          "currency": "USD",
+          "lastUpdated": "2023-11-15T14:30:45Z",
+        },
+        "transactions": [
+          {
+            "id": 101,
+            "transactionId": "TX-2023-101",
+            "amount": 150.0,
+            "currency": "USD",
+            "recipientName": "John Doe",
+            "recipientAccount": "ACC-789012",
+            "date": "2023-11-10T09:15:22Z",
+            "status": "completed",
+            "note": "Invoice #1234",
+          },
+          {
+            "id": 102,
+            "transactionId": "TX-2023-102",
+            "amount": -75.25,
+            "currency": "USD",
+            "recipientName": "Amazon Inc",
+            "recipientAccount": "ACC-345678",
+            "date": "2023-11-12T16:45:10Z",
+            "status": "completed",
+            "note": "Online purchase",
+          },
+        ],
+      };
+      return Right(
+        response.Response(
+          statusCode: 200,
+          statusMessage: "OK",
+          data: defaultData,
+        ),
+      );
+    } else if (endPoint == '/transfers/send') {
+      final defaultData = {
+        "transaction": {
+          "id": 789,
+          "transactionId": "XFER-2023-789",
+          "amount": 250.0,
+          "currency": "USD",
+          "recipientName": "Sarah Johnson",
+          "recipientAccount": "ACC-456789",
+          "date": "2023-11-20T13:45:30Z",
+          "status": "completed",
+          "note": "Freelance payment",
+        },
+      };
+      return Right(
+        response.Response(
+          statusCode: 200,
+          statusMessage: "OK",
+          data: defaultData,
+        ),
+      );
+    }
+
+    // Original network call for other endpoints
     final res = handleException(
       () => dio.post(endPoint, data: data),
       endPoint: endPoint,

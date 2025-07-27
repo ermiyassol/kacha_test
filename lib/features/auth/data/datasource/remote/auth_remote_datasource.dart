@@ -26,9 +26,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   ) async {
     try {
       final response = await _networkService.post(
-        'http://127.0.0.1:3658/m2/1016240-1002648-default/19545607',
+        '/auth/login',
         data: {'email': email, 'password': password},
       );
+
+      // ignore: avoid_print
+      print("response - $response");
 
       return response.fold((l) => Left(l), (r) {
         final authResponse = AuthResponse.fromJson(r.data);

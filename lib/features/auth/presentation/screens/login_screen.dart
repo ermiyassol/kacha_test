@@ -134,6 +134,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ref
           .read(authNotifierProvider.notifier)
           .login(_emailController.text.trim(), _passwordController.text.trim());
+      context.pushNamed(Routes.dashboard.name);
     }
   }
 }
